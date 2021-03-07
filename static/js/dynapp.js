@@ -42,18 +42,18 @@
 
 //^^^^^^^^^^^^^^^^^DROPDOWN^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-d3.selectAll("body").on("change", updatePage);
-console.log(d3.selectAll("body"))
+// d3.selectAll("body").on("change", updatePage);
+// console.log(d3.selectAll("body"))
 
-function updatePage() {
-    console.log(`inside updatepage`)
-//   // Use D3 to select the dropdown menu
-   let dropdownMenu = d3.selectAll("#selOption").node([0]);
-//   // Assign the dropdown menu item ID to a variable
-    let dropdownMenuID = dropdownMenu.id;
-//   // Assign the dropdown menu option to a variable
-    let selectedOption = dropdownMenu.value;
-}
+// function updatePage() {
+//     console.log(`inside updatepage`)
+// //   // Use D3 to select the dropdown menu
+//    let dropdownMenu = d3.selectAll("#selOption").node([0]);
+// //   // Assign the dropdown menu item ID to a variable
+//     let dropdownMenuID = dropdownMenu.id;
+// //   // Assign the dropdown menu option to a variable
+//     let selectedOption = dropdownMenu.value;
+// }
 //   console.log(dropdownMenuID);
 //   console.log(selectedOption);
 
@@ -91,11 +91,6 @@ function updatePage() {
 
 //Asign JSON data to JS object
 let id = data[0]
-//Assign id array values to JS object
-let idcode= id.names[23]
-console.log(idcode)
-
-
 
 let chosenId= parseInt(id.names[14])
 console.log(`chosen_id: ${chosenId}`)
@@ -137,6 +132,35 @@ for ( var bb=0; bb<id.names.length; bb++){
         another = bb
     }
 }
+
+
+//Assign id array values to JS object
+let idcode= id.names
+console.log(idcode)
+
+
+IDList()
+function IDList(){
+    var select = document.getElementById("selDataset") 
+    for (var i = 0; i < idcode.length; i++) { 
+        var optn = idcode[i]; 
+        var el = document.createElement("option"); 
+        el.textContent = optn; 
+        el.value = optn; 
+        select.appendChild(el); 
+    } 
+}
+
+
+d3.selectAll('#selDataset').on('change',optionChanged)
+
+
+function optionChanged(){
+ let dropdownMenu = d3.select('#selDataset'); 
+ let dataset = dropdownMenu.property("value")
+ console.log(dataset)  
+}
+
 
 chosen=[]
 function displayMetadata(){console.log(Object.entries(id.metadata[another]))}

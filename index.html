@@ -24,11 +24,13 @@
         <div class="well">
  
           <h5>Test Subject ID No.:</h5>
-          <!-- <select id="selDataset" onchange="optionChanged(this.value)"></select> -->
-          <select id="selectOption">
-            <option value="option1">Menu Option 1</option>
-            <option value="option2">Menu Option 2</option>
-          </select>
+          <select id="selDataset" onchange="optionChanged(this.value)">
+            <!-- <button onclick="IDList();"> 
+              click here to select individual
+            </button>  -->
+            <!-- <option value="option1">Menu Option 1</option>
+            <option value="option2">Menu Option 2</option> -->
+          </select> 
         </div>
         <div class="panel panel-primary">
           <div class="panel-heading">
@@ -54,10 +56,35 @@
   <div id="plot"></div>
   <div id="bar-plot"></div>
 
+ 
+
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
   <script src="app.js"></script>
   <script src="./static/js/dynapp.js"></script>         
   
+  <!-- <script> 
+    //from geeksforgeeks
+      var select = document.getElementById("arr"); 
+      var names = data[0];
+      let elmts = names.names 
+      up.innerHTML = "Click on the button to " 
+                  + "perform the operation"+ 
+                  ".<br>Array - [" + elmts + "]"; 
+  
+      // Main function 
+      function GFG_Fun() { 
+          for (var i = 0; i < elmts.length; i++) { 
+              var optn = elmts[i]; 
+              var el = document.createElement("option"); 
+              el.textContent = optn; 
+              el.value = optn; 
+              select.appendChild(el); 
+          } 
+          down.innerHTML = "Elements Added"; 
+      } 
+  </script> -->
+
   <!-- <select id="selectOption">
     <option value="option1">Menu Option 1</option>
     <option value="option2">Menu Option 2</option>
