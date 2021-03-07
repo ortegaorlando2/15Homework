@@ -1,38 +1,4 @@
 
-  
-  // ###############OTHER OPTIONS##########################
-  
-  
-//   let eyeColor = ["Brown", "Brown", "Brown", "Brown", "Brown",
-//     "Brown", "Brown", "Brown", "Green", "Green",
-//     "Green", "Green", "Green", "Blue", "Blue",
-//     "Blue", "Blue", "Blue", "Blue"];
-//   let eyeFlicker = [26.8, 27.9, 23.7, 25, 26.3, 24.8,
-//     25.7, 24.5, 26.4, 24.2, 28, 26.9,
-//     29.1, 25.7, 27.2, 29.9, 28.5, 29.4, 28.3];
-  
-//   // Create the Trace
-//   let tracebar = {
-//     x: eyeColor,
-//     y: eyeFlicker,
-//     type: "bar"
-//   };
-  
-//   // Create the data array for the plot
-//   let initial = [tracebar];
-  
-//   // Define the plot layout
-//   let layout = {
-  
-//   // Define the plot layout
-//     title: "Eye Color vs Flicker",
-//     xaxis: { title: "Eye Color" },
-//     yaxis: { title: "Flicker Frequency" }
-//   };
-  
-//   // Plot the chart to a div tag with id "bar-plot"
-//   Plotly.newPlot("bar-plot", initial, layout);
-
 //**************************TO LOAD JASON (doesn't work yet)******************/
 
 // url = "https://ortegaorlando2.github.io/15Homework/data/samples/"
@@ -76,16 +42,18 @@
 
 //^^^^^^^^^^^^^^^^^DROPDOWN^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-// d3.selectAll("body").on("change", updatePage);
+d3.selectAll("body").on("change", updatePage);
+console.log(d3.selectAll("body"))
 
-// function updatePage() {
+function updatePage() {
+    console.log(`inside updatepage`)
 //   // Use D3 to select the dropdown menu
-//   let dropdownMenu = d3.selectAll("#selDataset").node();
+   let dropdownMenu = d3.selectAll("#selOption").node([0]);
 //   // Assign the dropdown menu item ID to a variable
-//   let dropdownMenuID = "516"//id.name;
+    let dropdownMenuID = dropdownMenu.id;
 //   // Assign the dropdown menu option to a variable
-//   let selectedOption = "516"//dropdownMenu.value;
-// }
+    let selectedOption = dropdownMenu.value;
+}
 //   console.log(dropdownMenuID);
 //   console.log(selectedOption);
 
@@ -183,30 +151,40 @@ chosenOtu_ids = id.samples[another].otu_ids
 
 
 displayMetadata()
+
+
+let top10=[]
+let top10_ids=[]
+let top10_labels=[]
+function selectTop10(){
+// correct the js object
 chosendata = chooseSample(chosen)
 chosenOtu_ids = chosendata[1]
 chosenOtu_values = chosendata[2]
-
 chosenOtu_labels = chosendata[3]
 chosenOtu_ids = chosenOtu_ids.slice(1,chosenOtu_ids.length)
 chosenOtu_values = chosenOtu_values.slice(1,chosenOtu_values.length)
 chosenOtu_labels = chosenOtu_labels.slice(1,chosenOtu_labels.length)
 console.log(chosenOtu_labels)
-
-let top10 = chosenOtu_values.map(function(){return chosenOtu_values[0].slice(0,10)});
-let top10_ids = chosenOtu_ids.map(function(){return chosenOtu_ids[0].slice(0,10)});
-let top10_labels = chosenOtu_labels.map(function(){return chosenOtu_labels[0].slice(0,10)});
+//separate only ten
+top10 = chosenOtu_values.map(function(){return chosenOtu_values[0].slice(0,10)});
+top10_ids = chosenOtu_ids.map(function(){return chosenOtu_ids[0].slice(0,10)});
+top10_labels = chosenOtu_labels.map(function(){return chosenOtu_labels[0].slice(0,10)});
 console.log(top10_labels)
 let x = top10_ids[0].toString()
+return x
+}
+fi=selectTop10()
+console.log(fi);
 
 
-console.log(x);
+initialPlot(fi)
 
 
-
+function initialPlot(fi){
 // Create the Trace
 let tracebar = {
-    x: x,
+    x: fi,
     y: top10[0],
     text: top10_labels[0],
     name: "species",
@@ -227,7 +205,7 @@ let tracebar = {
   
   // Plot the chart to a div tag with id "bar-plot"
   Plotly.newPlot("bar-plot", initial, layout);
-
+}
 
 
 
