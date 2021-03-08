@@ -1,97 +1,23 @@
 
-//**************************TO LOAD JASON (doesn't work yet)******************/
+//react to a change in dropdown
+let chosen="940"
+function optionChanged(){
+ let dropdownMenu = d3.select('#selDataset'); 
+ chosen = dropdownMenu.property("value") 
+ console.log(`${chosen} is the individual`)
+}
 
-// url = "https://ortegaorlando2.github.io/15Homework/data/samples/"
-
-// // Fetch the JSON data and console log it
-// d3.json(url).then(function(data) {
-//   console.log(data);
-// });
-
-// // Promise Pending
-// const dataPromise = d3.json(bacteria);
-// console.log("Data Promise: ", dataPromise);
-
-// let myFirstPromise = new Promise((resolve, reject) => {
-//     // We call resolve(...) when what we were doing asynchronously was successful, and reject(...) when it failed.
-//     // In this example, we use setTimeout(...) to simulate async code.
-//     // In reality, you will probably be using something like XHR or an HTML5 API.
-//     setTimeout( function() {
-//       resolve("Success!")  // Yay! Everything went well!
-//     }, 250)
-//   })
-  
-//   myFirstPromise.then((successMessage) => {
-//     // successMessage is whatever we passed in the resolve(...) function above.
-//     // It doesn't have to be a string, but if it is only a succeed message, it probably will be.
-//     console.log("Yay! " + successMessage)
-//   });
-  
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&READ JSON&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
-
-// const url = "https://api.spacexdata.com/v2/launchpads";
-
-// // Fetch the JSON data and console log it
-// d3.json(url).then(function(spacex) {
-//   console.log(spacex);
-// });
-
-// // Promise Pending
-// const dataPromise = d3.json(url);
-// console.log("Data Promise: ", dataPromise);
-
-//^^^^^^^^^^^^^^^^^DROPDOWN^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-// d3.selectAll("body").on("change", updatePage);
-// console.log(d3.selectAll("body"))
-
-// function updatePage() {
-//     console.log(`inside updatepage`)
-// //   // Use D3 to select the dropdown menu
-//    let dropdownMenu = d3.selectAll("#selOption").node([0]);
-// //   // Assign the dropdown menu item ID to a variable
-//     let dropdownMenuID = dropdownMenu.id;
-// //   // Assign the dropdown menu option to a variable
-//     let selectedOption = dropdownMenu.value;
-// }
-//   console.log(dropdownMenuID);
-//   console.log(selectedOption);
-
-
-//   d3.selectAll("#selDataset").on("change", updatePlotly);
-
-// // This function is called when a dropdown menu item is selected
-// function updatePlotly() {
-//   // Use D3 to select the dropdown menu
-//   let dropdownMenu = d3.select("#selDataset");
-//   // Assign the value of the dropdown menu option to a variable
-//   let dataset = dropdownMenu.property("value");
-
-//   <option value="option1">Menu Option 1</option>
-//   <option value="option2">Menu Option 2</option
-
-//   if (dataset === 'dataset1') {
-//     x = [1, 2, 3, 4, 5];
-//     y = [1, 2, 4, 8, 16];
-//   }
-
-//   else if (dataset === 'dataset2') {
-//     x = [10, 20, 30, 40, 50];
-//     y = [1, 10, 100, 1000, 10000];
-//   }
-
-//   // Note the extra brackets around 'x' and 'y'
-//   Plotly.restyle("plot", "x", [x]);
-//   Plotly.restyle("plot", "y", [y]);
-// }
-
-// init();
 
 //^^^^^^^^^^^^^^^^^^^^^ PLOTS ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 //Asign JSON data to JS object
-let id = data[0]
+id = d3.json(url)
+const { id }  = await iAmAPromise.then(result => result.data);
 
+
+id=id[["PromiseResult"]]
+// let metadata = id.names
+// console.log(metadata)
 let metaDataid = []
 let metaEthnicity = []
 let metaGender = []
@@ -120,8 +46,13 @@ id.samples.forEach(function (element){let idNumber=element.id; samplesOtu_labels
 
 //Assign id array values to JS object
 let idcode= id.names
-let chosen = "940"
+//let chosen = "940"
+console.log(idcode)
 
+modifyDemo()
+function modifyDemo(){
+
+}
 
 IDList()
 function IDList(){
@@ -136,17 +67,6 @@ function IDList(){
     } 
 }
 
-
-d3.selectAll('#selDataset').on('change',optionChanged)
-
-function optionChanged(){
- let dropdownMenu = d3.select('#selDataset'); 
- chosen = dropdownMenu.property("value") 
- console.log(`${chosen} is the individual`)
- newIndividual()
-}
-
-
 newIndividual()
 
 function newIndividual(){
@@ -158,16 +78,16 @@ function newIndividual(){
         }
     } 
 
-//let chosen =idcode[0]
-let newt = `Top 10 OTUs in ${chosen}`
-console.log(newt)
+    //let chosen =idcode[0]
+    let newt = `Top 10 OTUs in ${chosen}`
+    console.log(newt)
 
-let chosenId= parseInt(idcode[chosen])
-console.log(`chosen_id: ${chosenId}`)
+    let chosenId= parseInt(idcode[chosen])
+    console.log(`chosen_id: ${chosenId}`)
 
-let another = 0
-//console.log(`${metaDataid}`)
-for ( var bb=0; bb<id.names.length; bb++){ 
+    let another = 0
+    //console.log(`${metaDataid}`)
+    for ( var bb=0; bb<id.names.length; bb++){ 
     //console.log(`${metaDataid[bb]}`)
     if(metaDataid[bb]===chosenId){
         another = bb
@@ -176,7 +96,9 @@ for ( var bb=0; bb<id.names.length; bb++){
 
 
 console.log(chosen) 
-function displayMetadata(){console.log(Object.entries(id.metadata[another]))}
+function displayMetadata(){let screenBox = Object.entries(id.metadata[another])
+console.log(`Just displayed the metadata ${screenBox}`)
+}
 function chooseSample(chosen){chosen =(Object.entries(id.samples[another]));return chosen}
 
 let chosenOtu_ids =[]
@@ -271,6 +193,8 @@ var trace1 = {
 }
 
 }
+
+
 d3.select("#refresh").on("change",updatePlotly);
 
 function updatePlotly(){
@@ -286,43 +210,4 @@ newy =top10[0]
 }
 
 
-
-
-//   // 2. Use filter() to pass the function as its argument
-//   let filteredMovies = topMovies.filter(filterMovieRatings);
-  
-//   //  Check to make sure your are filtering your movies.
-//   console.log(filteredMovies);
-  
-//   // 3. Use the map method with the arrow function to return all the filtered movie titles.
-//   let titles = filteredMovies.map(movies =>  movies.title);
-  
-//   //  Check your filtered movie titles
-//   console.log(titles);
-  
-//   // 4. Use the map method with the arrow function to return all the filtered movie metascores.
-//   let ratings = filteredMovies.map(movies => movies.metascore);
-  
-//   //  Check your filtered metascores.
-//   console.log(ratings);
-  
-//   // 5. Create your trace.
-//   let trace = {
-//     x: titles,
-//     y: ratings,
-//     type: "bar"
-//   };
-  
-//   // 6. Create the data array for our plot
-//   let data = [trace];
-  
-//   // 7. Define our plot layout
-//   let layout = {
-//     title: "The highest critically acclaimed movies",
-//     xaxis: { title: "Title" },
-//     yaxis: { title: "Metascore (Critic) Rating"}
-//   };
-  
-//   // 8. Plot the chart to a div tag with id "bar-plot"
-//   Plotly.newPlot("bar-plot", data, layout);
 
