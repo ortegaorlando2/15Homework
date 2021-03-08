@@ -216,6 +216,7 @@ console.log(fi);
 
 newt = `Top 10 OTUs in ${idcode[chosen]}`
 initialPlot()
+bubbleplot()
 
 function initialPlot(){
 // Create the Trace
@@ -240,8 +241,36 @@ let tracebar = {
   // Plot the chart to a div tag with id "bar-plot"
   Plotly.newPlot("bar-plot", initial, layout);
 }
+
+function bubbleplot(){
+var trace1 = {
+    x: fi,
+    y: top10[0],
+    text: top10_labels[0],
+    mode: 'markers',
+    marker: {
+      color: ['rgb(93, 164, 214)', 'rgb(255, 144, 14)',  'rgb(44, 160, 101)', 'rgb(255, 65, 54)',
+      'rgb(204, 204, 0)', 'rgb(0, 0, 255)',  'rgb(255, 153, 153)', 'rgb(160, 160, 160)',
+      'rgb(51, 0, 102)', 'rgb(255, 0, 0)'],
+      size: top10[0]
+    }
+  };
+  
+  var bubbles = [trace1];
+  
+  var layout2 = {
+    title: newt,
+    showlegend: false,
+    height: 600,
+    width: 800
+  };
+  
+  Plotly.newPlot('plot', bubbles, layout2);
+
+
 }
 
+}
 d3.select("#refresh").on("change",updatePlotly);
 
 function updatePlotly(){
