@@ -1,13 +1,21 @@
 
+
+
+
 //react to a change in dropdown
 let chosen="940"
+let standard = true
+optionChanged()
+
 function optionChanged(){
+    // if (chosen="940"){}
+    // else{
  let dropdownMenu = d3.select('#selDataset'); 
  chosen = dropdownMenu.property("value") 
+//  console.log(`${chosen} is the individual`)
+// }
+ 
  console.log(`${chosen} is the individual`)
-}
-
-
 //^^^^^^^^^^^^^^^^^^^^^ PLOTS ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 const url =  "https://ortegaorlando2.github.io/15Homework/samples.json";
@@ -57,15 +65,11 @@ id.samples.forEach(function (element){let idNumber=element.id; samplesOtu_labels
 //Assign id array values to JS object
 let idcode= id.names
 
-//let chosen = "940"
-console.log(metaDataid)
-
-
 IDList()
 function IDList(){
     var select = document.getElementById("selDataset") 
-    for (var i = 0; i < idcode.length; i++) { 
-        var optn = idcode[i]; 
+    for (var i = 0; i < metaDataid.length; i++) { 
+        var optn = metaDataid[i]; 
         var el = document.createElement("option"); 
         el.textContent = optn; 
         el.value = optn; 
@@ -75,26 +79,30 @@ function IDList(){
 }
 
 
-for (var ind=0; ind < idcode.length; ind++){
-    if(idcode[ind] === chosen){
-       chosen=ind 
-       console.log(ind)
-    }
-} 
+//let chosen = "940"
+console.log(metaDataid)
 
+
+console.log("About to enter")
 
 newIndividual()
 
 function newIndividual(){
 
+console.log("Inside new Individual")
 
-
+    for (var ind=0; ind < idcode.length; ind++){
+        if(idcode[ind] === chosen){
+           chosen=ind 
+           console.log(`this is the index ${ind}`)
+        }
+    }
 
     //let chosen =idcode[0]
     let newt = `Top 10 OTUs in ${chosen}`
     console.log(newt)
 
-    let chosenId= parseInt(idcode[chosen])
+    let chosenId= idcode[chosen]
     console.log(`chosen_id: ${chosenId}`)
 
     let another = 0
@@ -217,3 +225,4 @@ var trace1 = {
 
 
 });
+}
