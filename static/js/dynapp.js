@@ -92,9 +92,6 @@
 //Asign JSON data to JS object
 let id = data[0]
 
-let chosenId= parseInt(id.names[14])
-console.log(`chosen_id: ${chosenId}`)
-
 let metaDataid = []
 let metaEthnicity = []
 let metaGender = []
@@ -121,22 +118,9 @@ id.samples.forEach(function (element){let idNumber=element.id; samplesOtu_ids.pu
 id.samples.forEach(function (element){let idNumber=element.id; samplesSample_values.push(idNumber)})
 id.samples.forEach(function (element){let idNumber=element.id; samplesOtu_labels.push(idNumber)})
 
-
-
-let another = 0
-//console.log(`${metaDataid}`)
-for ( var bb=0; bb<id.names.length; bb++){ 
-    //console.log(`${metaDataid[bb]}`)
-    if(metaDataid[bb]===chosenId){
-        id.metadata.forEach(function () {console.log(`${id.metadata[bb]}`)})
-        another = bb
-    }
-}
-
-
 //Assign id array values to JS object
 let idcode= id.names
-console.log(idcode)
+let chosen = "940"
 
 
 IDList()
@@ -147,6 +131,7 @@ function IDList(){
         var el = document.createElement("option"); 
         el.textContent = optn; 
         el.value = optn; 
+        console.log(el)
         select.appendChild(el); 
     } 
 }
@@ -154,15 +139,43 @@ function IDList(){
 
 d3.selectAll('#selDataset').on('change',optionChanged)
 
-
 function optionChanged(){
  let dropdownMenu = d3.select('#selDataset'); 
- let dataset = dropdownMenu.property("value")
- console.log(dataset)  
+ chosen = dropdownMenu.property("value") 
+ console.log(`${chosen} is the individual`)
+ newIndividual()
 }
 
 
-chosen=[]
+newIndividual()
+
+function newIndividual(){
+
+    for (var ind=0; ind < idcode.length; ind++){
+        if(idcode[ind] === chosen){
+           chosen=ind 
+           console.log(ind)
+        }
+    } 
+
+//let chosen =idcode[0]
+let newt = `Top 10 OTUs in ${chosen}`
+console.log(newt)
+
+let chosenId= parseInt(idcode[chosen])
+console.log(`chosen_id: ${chosenId}`)
+
+let another = 0
+//console.log(`${metaDataid}`)
+for ( var bb=0; bb<id.names.length; bb++){ 
+    //console.log(`${metaDataid[bb]}`)
+    if(metaDataid[bb]===chosenId){
+        another = bb
+    }
+}
+
+
+console.log(chosen) 
 function displayMetadata(){console.log(Object.entries(id.metadata[another]))}
 function chooseSample(chosen){chosen =(Object.entries(id.samples[another]));return chosen}
 
@@ -189,23 +202,22 @@ chosenOtu_labels = chosendata[3]
 chosenOtu_ids = chosenOtu_ids.slice(1,chosenOtu_ids.length)
 chosenOtu_values = chosenOtu_values.slice(1,chosenOtu_values.length)
 chosenOtu_labels = chosenOtu_labels.slice(1,chosenOtu_labels.length)
-console.log(chosenOtu_labels)
+//console.log(chosenOtu_labels)
 //separate only ten
 top10 = chosenOtu_values.map(function(){return chosenOtu_values[0].slice(0,10)});
 top10_ids = chosenOtu_ids.map(function(){return chosenOtu_ids[0].slice(0,10)});
 top10_labels = chosenOtu_labels.map(function(){return chosenOtu_labels[0].slice(0,10)});
-console.log(top10_labels)
+//console.log(top10_labels)
 let x = top10_ids[0].toString()
 return x
 }
 fi=selectTop10()
 console.log(fi);
 
+newt = `Top 10 OTUs in ${idcode[chosen]}`
+initialPlot()
 
-initialPlot(fi)
-
-
-function initialPlot(fi){
+function initialPlot(){
 // Create the Trace
 let tracebar = {
     x: fi,
@@ -220,9 +232,7 @@ let tracebar = {
   
   // Define the plot layout
   let layout = {
-  
-  // Define the plot layout
-    title: "Top 10 OTUs",
+    title: newt,
     xaxis: { title: "id" },
     yaxis: { title: "values" }
   };
@@ -230,8 +240,21 @@ let tracebar = {
   // Plot the chart to a div tag with id "bar-plot"
   Plotly.newPlot("bar-plot", initial, layout);
 }
+}
 
+d3.select("#refresh").on("change",updatePlotly);
 
+function updatePlotly(){
+let newx=[]
+let newy=[]
+
+newx =fi
+newy =top10[0]
+// Note the extra brackets around 'x' and 'y'
+  Plotly.restyle("bar-plot", "x", [newx]);
+  Plotly.restyle("bar-plot", "y", [newy]);
+
+}
 
 
 
