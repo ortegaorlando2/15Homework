@@ -131,7 +131,7 @@ function IDList(){
         var el = document.createElement("option"); 
         el.textContent = optn; 
         el.value = optn; 
-        //console.log(el)
+        
         select.appendChild(el); 
     } 
 }
