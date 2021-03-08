@@ -10,15 +10,25 @@ function optionChanged(){
 
 //^^^^^^^^^^^^^^^^^^^^^ PLOTS ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+const url =  "https://ortegaorlando2.github.io/15Homework/samples.json";
+
 //Asign JSON data to JS object
-id = d3.json(url)
-const { id }  = await iAmAPromise.then(result => result.data);
+d3.json(url).then(function(data) {
+    console.log(data);
+  
+  
+  // Promise Pending
+  const dataPromise = d3.json(url);
+  console.log("Data Promise: ", dataPromise);
 
+  console.log(id)
 
-id=id[["PromiseResult"]]
-// let metadata = id.names
+id =data
+// // id=id[["PromiseResult"]]
+// console.log(id)
+// let metadata = data.metadata
 // console.log(metadata)
-let metaDataid = []
+let metaDataid = [] 
 let metaEthnicity = []
 let metaGender = []
 let metaAge = []
@@ -46,13 +56,10 @@ id.samples.forEach(function (element){let idNumber=element.id; samplesOtu_labels
 
 //Assign id array values to JS object
 let idcode= id.names
+
 //let chosen = "940"
-console.log(idcode)
+console.log(metaDataid)
 
-modifyDemo()
-function modifyDemo(){
-
-}
 
 IDList()
 function IDList(){
@@ -67,16 +74,21 @@ function IDList(){
     } 
 }
 
+
+for (var ind=0; ind < idcode.length; ind++){
+    if(idcode[ind] === chosen){
+       chosen=ind 
+       console.log(ind)
+    }
+} 
+
+
 newIndividual()
 
 function newIndividual(){
 
-    for (var ind=0; ind < idcode.length; ind++){
-        if(idcode[ind] === chosen){
-           chosen=ind 
-           console.log(ind)
-        }
-    } 
+
+
 
     //let chosen =idcode[0]
     let newt = `Top 10 OTUs in ${chosen}`
@@ -89,11 +101,19 @@ function newIndividual(){
     //console.log(`${metaDataid}`)
     for ( var bb=0; bb<id.names.length; bb++){ 
     //console.log(`${metaDataid[bb]}`)
-    if(metaDataid[bb]===chosenId){
+    if(idcode[bb]===chosenId){
         another = bb
     }
 }
 
+
+d3.select("#id").text(`ID ${idcode[another]}`);
+d3.select("#et").text(`Ethnicity ${metaEthnicity[another]}`);
+d3.select("#gn").text(`Gender ${metaGender[another]}`);
+d3.select("#ag").text(`Age ${metaAge[another]}`);
+d3.select("#lo").text(`Location ${metaLocation[another]}`);
+d3.select("#bt").text(`Belly Button type ${metaBbtype[another]}`);
+d3.select("#wf").text(`Washing Frequency ${metaWfreq[another]}`);
 
 console.log(chosen) 
 function displayMetadata(){let screenBox = Object.entries(id.metadata[another])
@@ -195,19 +215,5 @@ var trace1 = {
 }
 
 
-d3.select("#refresh").on("change",updatePlotly);
 
-function updatePlotly(){
-let newx=[]
-let newy=[]
-
-newx =fi
-newy =top10[0]
-// Note the extra brackets around 'x' and 'y'
-  Plotly.restyle("bar-plot", "x", [newx]);
-  Plotly.restyle("bar-plot", "y", [newy]);
-
-}
-
-
-
+});
