@@ -131,7 +131,7 @@ function IDList(){
         var el = document.createElement("option"); 
         el.textContent = optn; 
         el.value = optn; 
-        console.log(el)
+        //console.log(el)
         select.appendChild(el); 
     } 
 }
@@ -262,7 +262,7 @@ var trace1 = {
     title: newt,
     showlegend: false,
     height: 600,
-    width: 800
+    width: 1000
   };
   
   Plotly.newPlot('plot', bubbles, layout2);
